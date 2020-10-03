@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  line-chat-bot
+
+  Sample SAM Template for line-chat-bot
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  WhFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: chatter/
+      Handler: app.whResponder
+      Runtime: python3.8
+      Events:
+        LineWh:
+          Type: Api 
+          Properties:
+            Path: /line
+            Method: post
+
+Outputs:
+  WhFunctionApi:
+    Description: "api endpoint"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/line/"
