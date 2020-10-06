@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "line-webhook"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-jx3h3o6mj7ty"
+s3_prefix = "line-webhook"
+region = "ap-southeast-1"
+profile = "villaaws"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "LineToken=\"t2.micro\""

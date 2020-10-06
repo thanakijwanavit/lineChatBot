@@ -9,6 +9,12 @@ Globals:
   Function:
     Timeout: 3
 
+Parameters:
+  LineToken: 
+    Type: String
+    Default: t2.micro
+
+
 Resources:
   WhFunction:
     Type: AWS::Serverless::Function 
@@ -16,6 +22,9 @@ Resources:
       CodeUri: chatter/
       Handler: app.whResponder
       Runtime: python3.8
+      Environment:
+        Variables:
+          LINE_TOKEN: !Ref LineToken
       Events:
         LineWh:
           Type: Api 
@@ -23,7 +32,25 @@ Resources:
             Path: /line
             Method: post
 
+  Chatter:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: chatter/
+      Handler: app.whResponder
+      Runtime: python3.8
+      Environment:
+        Variables:
+          LINE_TOKEN: !Ref LineToken
+      Events:
+        LineWh:
+          Type: Api 
+          Properties:
+            Path: /chatter
+            Method: post
 Outputs:
-  WhFunctionApi:
+  MirrorInfoBot:
     Description: "api endpoint"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/line/"
+  Chatter:
+    Description: "api endpoint"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/chatter/"
